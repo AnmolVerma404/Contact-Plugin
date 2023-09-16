@@ -13,6 +13,13 @@
 if (!defined('ABSPATH')) {
     die('You can\'t be here');
 }
-echo "Secret Code";
 
+if (!class_exists('ContactPlugin')) {
+    class ContactPlugin
+    {
+
+    }
+
+    new ContactPlugin;
+}
 ?>
