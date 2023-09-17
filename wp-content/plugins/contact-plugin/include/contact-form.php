@@ -24,4 +24,23 @@ function create_rest_endpoint()
 function handle_enquiry($data)
 {
     $params = $data->get_params();
+
+    if (!wp_verify_nonce($params['_wpnonce'], 'wp_rest')) {
+        return new WP_Rest_Response('Message not sent', 422);
+    }
+
+    unset($params['_wpnonce']);
+    unset($params['_wp_http_referer']);
+
+    // foreach ($params as $key => $val) {
+    //     echo $key . " " . $val . "\n";
+    // }
+
+    $headers = [];
+
+    $sender_email = get_bloginfo('admin_email');
+    $sender_name = get_bloginfo('name');
+
+    $headers[] = "From: {$sender_name} <{$sender_email}>";
+    $headers[] = "Reply-to: {{$params['name']}} <{{$params['email']}}>";
 }
