@@ -17,7 +17,11 @@ function create_rest_endpoint()
         )
     );
 }
-function handle_enquiry()
+
+/**
+ * @param $data will contain all the response from the AJAX request
+ */
+function handle_enquiry($data)
 {
-    echo "Hello";
+    $params = $data->get_params();
 }
