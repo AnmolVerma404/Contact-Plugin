@@ -1,4 +1,7 @@
 <form id="enquiry_form">
+
+    <!-- <?php wp_nonce_field('wp-rest') ?> -->
+
     <label for>Name</label><br/>
     <input type="text" name="name"><br/><br/>
     <label>Email</label><br/>
@@ -17,9 +20,10 @@
         $("#enquiry_form").submit(function(event){
             event.preventDefault();
             var form = $(this);
+            console.log(form.serialize());
             $.ajax({
                 type:'POST',
-                url: "<?php echo get_rest_url(null, "v1/contact-form/subbmit"); ?>",
+                url: "<?php echo get_rest_url(null, "v1/contact-form/submit"); ?>",
                 data: form.serialize()
             })
         })
