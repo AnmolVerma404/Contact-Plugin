@@ -41,6 +41,9 @@ wp-config.php
 # uncomment the next line
 # /wp-content/plugins
 vendor
+wp-mail-smtp
+wp-mailhog-smtp
+all-in-one-seo-pack
 
 # All themes
 #

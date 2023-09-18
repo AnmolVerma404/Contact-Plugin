@@ -38,9 +38,22 @@ function handle_enquiry($data)
 
     $headers = [];
 
-    $sender_email = get_bloginfo('admin_email');
-    $sender_name = get_bloginfo('name');
+    $admin_email = get_bloginfo('admin_email');
+    $admin_name = get_bloginfo('name');
 
-    $headers[] = "From: {$sender_name} <{$sender_email}>";
-    $headers[] = "Reply-to: {{$params['name']}} <{{$params['email']}}>";
+    $headers[] = "From: {$admin_name} <{$admin_email}>";
+    $headers[] = "Reply-to: {$params['name']} <{$params['email']}>";
+    $headers[] = "Content-Type: text/html";
+
+    $subject = "New enquiry from {$params['name']}";
+
+    $message = '';
+    $message .= "Message has been sent from {$params['name']} <br/><br/>";
+
+    foreach ($params as $label => $value) {
+        $message .= ucfirst($label) . ':' . $value . "<br/>";
+    }
+
+    wp_mail($admin_email, $subject, $message, $headers);
+    return new WP_Rest_Response('Message sent successfully!!!', 200);
 }
