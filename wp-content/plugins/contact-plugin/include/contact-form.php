@@ -1,6 +1,25 @@
 <?php
 add_shortcode('contact', 'show_contact_form');
 add_action('rest_api_init', 'create_rest_endpoint');
+add_action('init', 'create_submissions_page');
+
+/**
+ * register_post_type takes @param string post_type and @param array arguments
+ * * register_post_type create a new entry in the post section i.e. in wordpress where post, pages are located
+ */
+function create_submissions_page()
+{
+    $args = [
+        'public' => true,
+        'has_archive' => true,
+        'labels' => [
+            'name' => 'Submissions',
+        ],
+        'capabilities' => ['create_posts' => 'do_not_allow'],
+    ];
+
+    register_post_type('submission', $args);
+}
 function show_contact_form()
 {
     include MY_PLUGIN_PATH . '/include/templates/contact-form.php';
