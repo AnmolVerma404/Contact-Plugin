@@ -12,10 +12,13 @@ function create_meta_box()
 function display_submission()
 {
     $post_metas = get_post_meta(get_the_ID());
-
+    unset($post_metas['_edit_last']);
+    unset($post_metas['_edit_lock']);
+    echo "<ul>";
     foreach ($post_metas as $key => $value) {
-        echo $key . ":" . $value[0];
+        echo "<li><strong>" . ucfirst($key) . "</strong></br>" . $value[0] . "</li>";
     }
+    echo "</ul>";
 }
 
 /**
@@ -87,7 +90,8 @@ function handle_enquiry($data)
 
     $postarr = [
         'post_title' => $params['name'],
-        'post_type' => 'submission'
+        'post_type' => 'submission',
+        'post_status' => 'publish'
     ];
 
     $post_id = wp_insert_post($postarr);
