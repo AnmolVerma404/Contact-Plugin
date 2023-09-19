@@ -34,7 +34,12 @@ function create_submissions_page()
             'name' => 'Submissions',
             'singular_name' => 'Submissions'
         ],
-        'supports' => false
+        'supports' => false,
+        'capability_type' => 'post',
+        'capablilties' => array(
+            'create_posts' => false,
+        ),
+        'map_meta_cap' => true,
     ];
 
     register_post_type('submission', $args);
