@@ -3,7 +3,7 @@
  * Plugin Name: Contact Plugin
  * Description: A contact Plugin
  * Version: 1.0.0
- * Text Domain: options-plugin
+ * Text Domain: contact-plugin
  */
 
 
