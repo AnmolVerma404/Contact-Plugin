@@ -1,4 +1,7 @@
 <?php
+if (!defined('ABSPATH')) {
+    die('You can\'t be here');
+}
 add_shortcode('contact', 'show_contact_form');
 add_action('rest_api_init', 'create_rest_endpoint');
 add_action('init', 'create_submissions_page');
