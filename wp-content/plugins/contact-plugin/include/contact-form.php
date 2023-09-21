@@ -120,9 +120,12 @@ function create_submissions_page()
     $args = [
         'public' => true,
         'has_archive' => true,
+        'menu_position' => 30,
+        'publicly_queryable' => false,
         'labels' => [
             'name' => 'Submissions',
-            'singular_name' => 'Submissions'
+            'singular_name' => 'Submissions',
+            'edit_item' => 'View Submission'
         ],
         'supports' => false,
         'capability_type' => 'post',
@@ -179,6 +182,12 @@ function handle_enquiry($data)
     $admin_email = get_bloginfo('admin_email');
     $admin_name = get_bloginfo('name');
 
+    $recipient_email = get_plugin_options('contact_plugin_recipients');
+
+    if (!$recipient_email) {
+        $recipient_email = $admin_email;
+    }
+
     $headers[] = "From: {$admin_name} <{$admin_email}>";
     $headers[] = "Reply-to: {$field_name} <{$field_email}>";
     $headers[] = "Content-Type: text/html";
@@ -216,6 +225,16 @@ function handle_enquiry($data)
         $message .= sanitize_text_field(ucfirst($label)) . ':' . $value . "<br/>";
     }
 
-    wp_mail($admin_email, $subject, $message, $headers);
-    return new WP_Rest_Response('Message sent successfully!!!', 200);
+    wp_mail($recipient_email, $subject, $message, $headers);
+
+    // set conformation message
+    $conformation_message = "Message sent successfully!!!";
+
+    if (get_plugin_options('contact_plugin_message')) {
+        $conformation_message = get_plugin_options('contact_plugin_message');
+        $conformation_message = str_replace('{name}', $params['name'], $conformation_message);
+    }
+
+    // return response
+    return new WP_Rest_Response($conformation_message, 200);
 }
