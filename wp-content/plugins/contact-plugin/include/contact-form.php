@@ -103,14 +103,11 @@ function display_submission()
      * Instead of creating a loop if you have a certain number of field that if possible use below way and declare each one by one.
      * By this you have more security and information in your hands
      */
-
     echo '<ul>';
-
     echo '<li><strong>Name:</strong><br /> ' . esc_html(get_post_meta(get_the_ID(), 'name', true)) . '</li>';
     echo '<li><strong>Email:</strong><br /> ' . esc_html(get_post_meta(get_the_ID(), 'email', true)) . '</li>';
     echo '<li><strong>Phone:</strong><br /> ' . esc_html(get_post_meta(get_the_ID(), 'phone', true)) . '</li>';
     echo '<li><strong>Message:</strong><br /> ' . esc_html(get_post_meta(get_the_ID(), 'message', true)) . '</li>';
-
     echo '</ul>';
 }
 
